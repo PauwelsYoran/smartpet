@@ -219,7 +219,7 @@ while True:
         # Comment the two lines "val = hx.get_weight(5)" and "print val" and uncomment the three lines to see what it prints.
         # np_arr8_string = hx.get_np_arr8_string()
         # binary_string = hx.get_binary_string()
-        # print binary_string + " " + np_arr8_string
+        # print binary_string + " " + np_arr8_stringd
 
         # Prints the weight. Comment if you're debbuging the MSB and LSB issue.
         val = max(0,int(hx.get_weight(5)))
