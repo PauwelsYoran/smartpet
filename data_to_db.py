@@ -67,8 +67,6 @@ datama = str(max(lijst_data))
 
 cursor = connection.connect
 
-timestampe = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-print(timestampe)
 print(datama)
 connection._execute_query("insert into weegschaal(data,unit) VALUES ("+ datama +",'g')")
 
