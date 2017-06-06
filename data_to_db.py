@@ -4,6 +4,7 @@ import RPi.GPIO as GPIO
 import time
 import sys
 from HX711 import HX711
+from DbClass import DbClass
 
 def cleanAndExit():
     print(
@@ -14,7 +15,7 @@ def cleanAndExit():
     sys.exit()
 
 
-hx = HX711(5, 6)
+hx = HX711(5, 22)
 
 # I've found out that, for some reason, the order of the bytes is not always the same between versions of python, numpy and the hx711 itself.
 # Still need to figure out why does it change.
@@ -53,21 +54,6 @@ for i in range(0,10):
     hx.power_up()
     time.sleep(0.5)
 
+db = DbClass()
 
-connection = mc.connect(
-    host= "localhost",
-    user = "user",
-    passwd = "passwd",
-    db= "db"
-)
-
-
-
-datama = str(max(lijst_data))
-
-cursor = connection.connect
-
-print(datama)
-connection._execute_query("insert into weegschaal(data,unit) VALUES ("+ datama +",'g')")
-
-connection.commit()
+db.setDataToSensor(200,'g')
