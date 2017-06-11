@@ -1,0 +1,37 @@
+{% extends 'base_html.html' %}
+
+{% block title %}
+    home
+{% endblock %}
+
+{% block home %}
+    class="active"
+{% endblock %}
+
+{% block body %}
+    <div class="space_nav">
+    <h1 class="h1_home">{{ naam[0] }} has eaten </h1>
+        <div class="data">
+            {{ eaten[0]  }} {{ eaten[1] }} <br>
+        </div>
+    <h1 class="h1_home"> food in reservoir: </h1>
+        <div class="data">
+            {{ reservoir[0]  }}{{ reservoir[1] }} <br>
+        </div>
+    <form action="/manualFeed" method="Post" >
+            <div class="form_home">
+                <label for="portionsize" > enter a portion </label> <br>
+            </div>
+            <div>
+                <input type="number" name="portionsize"  class="data_settings3">
+                <select name="unit" id="unit" class="data_settings2">
+                    <option value="g">g</option>
+                    <option value="kg">kg</option>
+                </select>
+            </div>
+
+                <input type="submit" value="feed me" class="submit_buttton" >
+        </form>
+    </div>
+
+{% endblock %}

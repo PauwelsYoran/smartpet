@@ -1,0 +1,25 @@
+{% extends 'base_html.html' %}
+
+{% block title %}
+    feeding-times
+{% endblock %}
+
+{% block timer %}
+    class="active"
+{% endblock %}
+
+{% block body %}
+    <div class="space_nav">
+    {% for time in timelist %}
+        <h1>feeding time:</h1>
+        <div class="data">
+            {{ time[0] }}
+        </div>
+    {% endfor %}
+        <br>
+
+        <a href="/time/newtime" class="margin"> add time</a>
+
+    </div>
+
+{% endblock %}

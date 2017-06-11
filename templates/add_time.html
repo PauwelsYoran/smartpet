@@ -1,0 +1,24 @@
+{% extends 'base_html.html' %}
+
+{% block title %}
+    feeding-times-add
+{% endblock %}
+
+{% block timer %}
+    class="active"
+{% endblock %}
+
+{% block body %}
+    <div class="space_nav">
+        <form action="/addTime" method="post">
+             new time<br>
+            <input type="time" name="time" class="different_length"><br>
+            <input type="submit" value="submit" class="different_length" >
+
+        </form>
+
+
+
+    </div>
+
+{% endblock %}

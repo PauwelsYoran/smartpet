@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <title>smartpet - {% block title %}
+
+        {% endblock %}</title>
+</head>
+<body>
+
+<nav>
+    <img src="../static/smartpet.png" alt="smartpet_logo">
+    <ol>
+        <li ><a {% block home %} {% endblock %} href="/">Home</a></li>
+        <li ><a {% block history %} {% endblock %} href="/history">History</a></li>
+        <li ><a {% block timer %} {% endblock %} href="/time">Timer</a></li>
+        <li ><a {% block setting %} {% endblock %} href="/settings">Settings</a></li>
+    </ol>
+    <FORM><INPUT class="button" Type="button"  onClick="history.go(-1);return true;"></FORM>
+
+</nav>
+
+{% block body %}
+{% endblock %}
+</body>
+</html>
