@@ -139,14 +139,16 @@ def manualFeed():
         #calculate how much food is left
         weight = sorted(list_weight)
         portion_weight = int(weight[-1])
-        portion_weight=portion_weight-23037 #can only be done when de reference unit is positive
+        portion_weight=portion_weight-22929 #can only be done when de reference unit is positive
 
         #inserts how much food is leftt in de Food reservoir tale
         if portion_weight > 1000:
             portion_Data = float(portion_weight / 1000)
             db.setDataToFood_reservoir(portion_Data, 2)
-        else:
+        elif portion_weight < 0:
+            portion_weight= 0
             db.setDataToFood_reservoir(portion_weight, 1)
+        else: db.setDataToFood_reservoir(portion_weight, 1)
 
 
     #gets how much food is in teh reservoir
@@ -305,6 +307,10 @@ def addPortion():
 
 @app.route('/history')
 def history():
+
+
+
+
     return render_template('history.html')
 
 

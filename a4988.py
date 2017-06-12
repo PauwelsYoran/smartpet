@@ -22,3 +22,5 @@ class a4988:
             time.sleep(0.005)
         GPIO.output(self.transistor, GPIO.LOW)
 
+mot=a4988()
+mot.turn_motor()
