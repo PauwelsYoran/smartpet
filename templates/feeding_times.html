@@ -10,19 +10,32 @@
 
 {% block body %}
     <div class="space_nav">
-        <div class="margin_bot">
-        {% for time in timelist %}
-            <h1>time:</h1>
-            <div class="data">
-                {{ time[0] }}
-            </div>
-        {% endfor %}
+    choose when you're dog should get food
 
+        <div class="margin_top_bot">
+            <h1>feeding times:</h1>
+            {% for time in timelist %}
+                <div class="display">
+                    <div class="data">
+                        {{ time[0] }}
+                    </div>
+                    <form action="/removeTime" method="post" class="margin_top_bot">
+
+                        <input type="hidden"  name="time" value="{{ time[0] }}" >
+                        <input type="submit" value="Remove" class="remove_buttton">
+                    </form>
+                </div>
+            {% endfor %}
         </div>
 
-        <div>
-            <a  href="/time/newtime" class="submit_buttton"> add time</a>
-        </div>
+        <form action="/addTime" method="post">
+             <h1><label for="time"> enter new time</label></h1>
+            <input type="time" name="time" class="data" ><br>
+            <input type="submit" value="add time" class="remove_buttton" >
+
+        </form>
+    </div>
+
     </div>
 
 {% endblock %}

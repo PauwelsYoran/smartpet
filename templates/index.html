@@ -10,7 +10,7 @@
 
 {% block body %}
     <div class="space_nav">
-    <h1 class="h1_home">{{ naam[0] }} has eaten </h1>
+    <h1 class="h1_home">today, {{ naam[0] }} has eaten </h1>
         <div class="data">
             {{ eaten[0]  }} {{ eaten[1] }} <br>
         </div>
@@ -20,7 +20,7 @@
         </div>
     <form action="/manualFeed" method="Post" >
             <div class="form_home">
-                <label for="portionsize" > enter a portion </label> <br>
+                <h1><label for="portionsize" > enter a portion to feed </label></h1>
             </div>
             <div>
                 <input type="number" name="portionsize"  class="data_settings3">

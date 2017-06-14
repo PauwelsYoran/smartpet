@@ -4,17 +4,16 @@ import sys
 from HX711 import HX711
 
 
-
 def cleanAndExit():
-    print(
-    "Cleaning...")
+    print
+    "Cleaning..."
     GPIO.cleanup()
-    print(
-    "Bye!")
+    print
+    "Bye!"
     sys.exit()
 
 
-hx = HX711(6,5 )
+hx = HX711(23,24)
 
 # I've found out that, for some reason, the order of the bytes is not always the same between versions of python, numpy and the hx711 itself.
 # Still need to figure out why does it change.
@@ -31,7 +30,7 @@ hx.set_reading_format("LSB", "MSB")
 # and I got numbers around 184000 when I added 2kg. So, according to the rule of thirds:
 # If 2000 grams is 184000 then 1000 grams is 184000 / 2000 = 92.
 # hx.set_reference_unit(113)
-hx.set_reference_unit(392.12)
+hx.set_reference_unit(391.35)
 
 hx.reset()
 #hx.tare()
@@ -46,8 +45,9 @@ while True:
         # print binary_string + " " + np_arr8_string
 
         # Prints the weight. Comment if you're debbuging the MSB and LSB issue.
-        val = val = max(0, int(hx.get_weight(5)))
+        val = hx.get_weight(5)
         print(val)
+
         hx.power_down()
         hx.power_up()
         time.sleep(0.5)

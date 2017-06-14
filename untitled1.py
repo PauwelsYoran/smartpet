@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 import time
+import datetime
 
 app = Flask(__name__)
 
@@ -20,7 +21,7 @@ def Home():
         else:
             weight=float(value[0])
         food_size=weight+food_size
-        print(food_size)
+
 
     if food_size > 1000:
         food_size=float(food_size/1000)
@@ -50,7 +51,7 @@ def manualFeed():
 
     # 2 declarations ofr the 2 different scale's, hx_res is the reservoir scale
     hx=HX711(20,21)
-    hx_res = HX711(5,6)
+    hx_res = HX711(23,24)
 
     #gets the dog's name
     naam= db.getDog_info()
@@ -123,7 +124,7 @@ def manualFeed():
 
         #starts up the reservoir scale
         hx_res.set_reading_format("LSB", "MSB")
-        hx_res.set_reference_unit(392.12)
+        hx_res.set_reference_unit(393.35)
         hx_res.reset()
 
         # gets the weight and put the resluts in a list
@@ -137,18 +138,22 @@ def manualFeed():
             time.sleep(0.5)
 
         #calculate how much food is left
-        weight = sorted(list_weight)
+        weight = (list_weight)
         portion_weight = int(weight[-1])
-        portion_weight=portion_weight-22929 #can only be done when de reference unit is positive
+        print(portion_weight)
+        portion_weight=portion_weight-22954 #can only be done when de reference unit is positive
+        print('portie:' + str(portion_weight))
 
         #inserts how much food is leftt in de Food reservoir tale
         if portion_weight > 1000:
             portion_Data = float(portion_weight / 1000)
+            print('data' + str(portion_Data))
             db.setDataToFood_reservoir(portion_Data, 2)
         elif portion_weight < 0:
             portion_weight= 0
             db.setDataToFood_reservoir(portion_weight, 1)
         else: db.setDataToFood_reservoir(portion_weight, 1)
+
 
 
     #gets how much food is in teh reservoir
@@ -164,7 +169,6 @@ def manualFeed():
         else:
             weight = float(value[0])
         food_size = weight + food_size
-        print(food_size)
 
     if food_size > 1000:
         food_size = float(food_size / 1000)
@@ -188,11 +192,7 @@ def Settings():
     max_portionsize=max_portionsize[-1]
     cur_max_portionsize = max_portionsize[0]
     unit_max = max_portionsize[1]
-
-    if unit_max==1:
-        unit_max='g'
-    else:
-        unit_max='kg'
+    print(unit_max)
 
     #get th dogs weight ot calculate how much foo is recommended
     weight=dog_info[1]
@@ -231,10 +231,7 @@ def addData():
     max_portionsize = max_portionsize[-1]
     cur_max_portionsize=max_portionsize[0]
     unit_max = max_portionsize[1]
-    if unit_max==1:
-        unit_max='g'
-    else:
-        unit_max='kg'
+
 
     # get th dogs weight ot calculate how much foo is recommended
     weight = dog_info[1]
@@ -252,7 +249,7 @@ def feedTimes():
     timelist = db.getFeedingTimes()
     timelist= sorted(timelist)
 
-    return render_template('feeding_times.html',timelist=timelist)
+    return render_template('feeding_times.html',timelist=timelist, count = 0)
 
 @app.route('/time/newtime')
 def newTimes():
@@ -268,7 +265,22 @@ def addTime():
     #cathces the form data and adds it to the
     time=request.form["time"]
     db.setDataToFeeding_times(time)
-    return render_template('add_time.html')
+
+    timelist = db.getFeedingTimes()
+    timelist = sorted(timelist)
+    return render_template('feeding_times.html',timelist=timelist, count = 0)
+
+@app.route('/removeTime',methods=['GET','POST'])
+def removeTime():
+    from DbClass import DbClass
+    db = DbClass()
+
+    time = request.form["time"]
+
+    db.remove_feedingtime(str(time))
+    timelist = db.getFeedingTimes()
+    timelist = sorted(timelist)
+    return render_template('feeding_times.html',timelist=timelist, count = 0)
 
 @app.route('/addPortion',methods=['GET','POST'])
 def addPortion():
@@ -294,10 +306,6 @@ def addPortion():
     max_portionsize = max_portionsize[-1]
     cur_max_portionsize = max_portionsize[0]
     unit_max = max_portionsize[1]
-    if unit_max==1:
-        unit_max='g'
-    else:
-        unit_max='kg'
 
     weight = dog_info[1]
     portionsize = db.getPortionsize(weight)
@@ -307,11 +315,58 @@ def addPortion():
 
 @app.route('/history')
 def history():
+    from DbClass import DbClass
+    import datetime
+    db = DbClass()
+    date = datetime.datetime.now().strftime('%Y-%m-%d')
+    food_eaten = db.getFood_eaten_graph(str(date))
+
+    data_list = []
+    for i in food_eaten:
+        temp_list = []
+        if i[1] == 'kg':
+            food = int(i[0] * 1000)
+        else:
+            food = int(i[0])
+        time = i[2].strftime('%H:%M:%S')
+        temp_list.append(time)
+        temp_list.append(food)
+        data_list.append(temp_list)
+
+    if data_list == []:
+        data_list=[['no food has bean eaten',0]]
+
+    return render_template('history.html',data_list=data_list)
 
 
+@app.route('/changeDate',methods=['GET','POST'])
+def changeDate():
+    from DbClass import DbClass
+
+    db = DbClass()
+    date = request.form["date"]
+    food_eaten = db.getFood_eaten_graph(str(date))
 
 
-    return render_template('history.html')
+    data_list = []
+    for i in food_eaten:
+        temp_list = []
+        if i[1] == 'kg':
+            food = int(i[0] * 1000)
+        else:
+            food = int(i[0])
+        time = i[2].strftime('%H:%M:%S')
+        temp_list.append(time)
+        temp_list.append(food)
+        data_list.append(temp_list)
+
+    if data_list == []:
+        data_list = [['no food has been eaten', 0]]
+    print(data_list)
+
+    return render_template('history.html',data_list=data_list)
+
+
 
 
 if __name__ == '__main__':

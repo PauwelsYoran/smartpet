@@ -34,7 +34,7 @@ nav>ol>li{
 
 }
 
-li>a{
+nav>ol>li>a{
     text-decoration: none;
     color: firebrick;
     display: inline-block;
@@ -53,7 +53,7 @@ li>a{
 
 }
 
-li>a:hover{
+nav>ol>li>a:hover{
     background:#f15555 ;
     color: white;
     text-decoration: none;
@@ -92,23 +92,77 @@ div>a:hover{
     color: black;
 }
 
+.footer-distributed{
+	background-color: firebrick;
+	box-sizing: border-box;
+	width: 100%;
+	text-align: left;
+	font: medium 14px sans-serif;
+	padding: 20px 80px;
+	margin-top: 80px;
+}
+
+.footer-distributed .footer-left p{
+	color:  #8f9296;
+	font-size: 12px;
+	margin: 0;
+}
+
+.footer-distributed p.footer-links{
+	font-size:14px;
+	font-weight: normal;
+	color:  #ffffff;
+	margin: 0 0 10px;
+	padding: 0;
+}
+
+.footer-distributed p.footer-links a{
+	display:inline-block;
+	line-height: 1.8;
+	text-decoration: none;
+    margin-right: 20px;
+	color:  inherit;
+}
+
+.footer-distributed .footer-right{
+	float: right;
+	margin-top: 6px;
+	max-width: 180px;
+}
+
+.footer-distributed .footer-right a{
+	display: inline-block;
+	width: 35px;
+	height: 135px;
+	background-color:  firebrick;
+	border-radius: 2px;
+	font-size: 20px;
+	color: #ffffff;
+	text-align: center;
+	line-height: 35px;
+	margin-left: 3px;
+}
+
+
+
 
 
 .data{
     font-weight: bold;
-    background-color:#9bf79e ;
+    background-color:#22B24B ;
     text-align: center;
     padding: 1em ;
     width: 10em  ;
     display: inline-block;
     border-radius: 60px;
-
-
+    border-style: none;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 .data_settings{
     font-weight: bold;
-    background-color:#9bf79e;
+    background-color:#22B24B;
     text-align: center;
     padding: 1em ;
     width: 10em  ;
@@ -122,7 +176,7 @@ div>a:hover{
 
 .data_settings2{
     font-weight: bold;
-    background-color:#9bf79e  ;
+    background-color:#22B24B  ;
     text-align: center;
     padding: 1em ;
     width: 5em  ;
@@ -135,7 +189,7 @@ div>a:hover{
 
 .data_settings3{
     font-weight: bold;
-    background-color:#9bf79e ;
+    background-color:#22B24B ;
     text-align: center;
     padding: 1em ;
     width: 10em  ;
@@ -148,7 +202,7 @@ div>a:hover{
 
 .data_recommended{
     font-weight: bold;
-    background-color:#9bf79e ;
+    background-color:#22B24B ;
     text-align: center;
     padding: 1em ;
     width: 10em  ;
@@ -215,6 +269,7 @@ div>a:hover{
     background-color: transparent;
     border: solid #ffcece;
 
+
 }
 
 .submit_buttton:hover{
@@ -226,14 +281,33 @@ div>a:hover{
 
 }
 
+.remove_buttton {
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+    color: firebrick;
+    padding: 0.5em 3em;
+    background-color: transparent;
+    border: solid #ffcece;
+
+}
+.remove_buttton:hover{
+    text-decoration: none;
+    border-radius: 10px;
+    color: black;
+    background-color: #ffcece;
+
+}
 
 .label{
     margin-left: 3.5em;
 }
 
-.margin_bot{
+.margin_top_bot{
     margin-bottom: 2em;
+    margin-top: 1em;
 }
+
 
 .form_home{
     margin-top: 2em;

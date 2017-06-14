@@ -11,7 +11,8 @@
 {% block body %}
 
     <div class="space_nav">
-        <form action="/addInfo" method="Post">
+    alter your dog's info here <br>
+        <form action="/addInfo" method="Post" class="margin_top_bot">
             <div>
                 <label for="name" class="label">name</label>
                 <input type="text" name="name" value="{{ dog_info[0] }}" class="data_settings">
@@ -35,13 +36,22 @@
         <div>
             the daily recommended portionsize for {{ dog_info[0] }} is {{ recommended[0] }} {{ recommended[1] }}
 
-                <form action="/addPortion" method="post">
-                    <input type="number" step="0.01" name="portion" value="{{ max_portionsize}}" class="data_settings3">
-                    <select name="unit" id="unit" class="data_settings2">
-                        <option value="kg">kg</option>
-                        <option value="g">g</option>
-                    </select> <br>
-                    <input type="submit" value="submit" class="submit_buttton">
+                <form action="/addPortion" method="post" class="margin_top_bot">
+                    <div>
+                        <input type="number" step="0.01" name="portion" value="{{ max_portionsize}}" class="data_settings3">
+                        <select name="unit" id="unit" class="data_settings2">
+                            {% if unit_max == 'g' %}
+                            <option value="kg">g</option>
+                            <option value="g">kg</option>
+                            {% else %}
+                            <option value="kg">kg</option>
+                            <option value="g">g</option>
+                            {% endif %}
+                        </select> <br>
+                    </div>
+                    <div>
+                        <input type="submit" value="Change portionsize" class="submit_buttton">
+                    </div>
                 </form>
 
         </div>

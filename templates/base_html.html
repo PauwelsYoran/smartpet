@@ -8,6 +8,8 @@
     <title>smartpet - {% block title %}
 
         {% endblock %}</title>
+    {% block head %}
+    {% endblock %}
 </head>
 <body>
 
@@ -25,5 +27,24 @@
 
 {% block body %}
 {% endblock %}
+
+
 </body>
+<footer class="footer-distributed">
+
+
+			<div class="footer-left">
+
+				<p class="footer-links">
+					<a href="/">Home</a>
+					<a href="/history">History</a>
+					<a href="/time">Timer</a>
+					<a href="/settings">Settings</a>
+
+				</p>
+
+				<p>Yoran Pauwels &copy; 2017</p>
+			</div>
+
+	</footer>
 </html>

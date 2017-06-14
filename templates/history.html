@@ -4,18 +4,54 @@
     history
 {% endblock %}
 
+{% block head %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['hour', 'food'],
+        {% for i in data_list %}
+            ['{{ i[0] }}', {{ i[1] }}],
+        {% endfor %}
+        ]);
+
+
+        var options = {
+          title: 'food eaten',
+          curveType: 'function',
+          color: 'red',
+          'backgroundColor': '#f4f4f4',
+          colors:['firebrick'],
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+
+        chart.draw(data, options);
+
+
+      }
+    </script>
+{% endblock %}
+
 {% block history %}
     class="active"
 {% endblock %}
 
 {% block body %}
     <div class="space_nav">
-    <canvas id="canvas">
-        <script src="../static/dist/Chart.bundle.js"></script>
-        <script src="../static/utils.js"></script>
+        <form action="/changeDate" method="post">
+            <h1><label for="date"> enter a date</label></h1>
+            <input type="date" name="date" class="data"><br>
+            <input type="submit" value="confirm" class="submit_buttton">
+        </form>
 
-
-    </canvas>
+        <div id="curve_chart" style="width: 900px; height: 500px" class="display"></div>
 
     </div>
 
