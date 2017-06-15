@@ -22,7 +22,6 @@ def Home():
             weight=float(value[0])
         food_size=weight+food_size
 
-
     if food_size > 1000:
         food_size=float(food_size/1000)
         food_eaten = [food_size,'kg']
@@ -335,8 +334,9 @@ def history():
 
     if data_list == []:
         data_list=[['no food has bean eaten',0]]
+    print(data_list)
 
-    return render_template('history.html',data_list=data_list)
+    return render_template('history.html',data_list=data_list,)
 
 
 @app.route('/changeDate',methods=['GET','POST'])
@@ -364,12 +364,14 @@ def changeDate():
         data_list = [['no food has been eaten', 0]]
     print(data_list)
 
-    return render_template('history.html',data_list=data_list)
+    return render_template('history.html',data_list=data_list,date = date)
 
 
 
 
 if __name__ == '__main__':
-    app.run(
+        import os
+        port = int(os.environ.get("PORT",8080))
         host='0.0.0.0'
-    )
+        app.run(host=host, port = port, debug = True)
+
