@@ -56,10 +56,6 @@ def manualFeed():
     naam= db.getDog_info()
     naam=naam[-1]
 
-    #get's how much food can be eaten today
-    rest_portionsize = db.getResting_portionsize()
-    rest_portionsize = rest_portionsize[-1]
-    rest_portionsize=rest_portionsize[0]
 
     #catxhes the form info
     portion = request.form["portionsize"]
@@ -74,84 +70,74 @@ def manualFeed():
         portion = int(portion)*1000
 
 
-    #checks if the max portionsize has een reached
-    if int(portion) < int(rest_portionsize):
 
-        #starts up the scale
-        hx.set_reading_format("LSB", "MSB")
-        hx.set_reference_unit(2167)
-        hx.reset()
-        hx.tare()
 
-        #turns the motor
-        for i in range(0,turn):
-            mot.turn_motor()
 
-        #gets the weight and put the resluts in a list
-        list_weight=[]
-        for i in range(0,10):
-            val = max(0, int(hx.get_weight(5)))
-            print(val)
-            hx.power_down()
-            hx.power_up()
-            list_weight.append(int(val))
-            time.sleep(0.5)
+    #starts up the scale
+    hx.set_reading_format("LSB", "MSB")
+    hx.set_reference_unit(2167)
+    hx.reset()
+    hx.tare()
 
-        #the list gets sorted so hightest value would be last
-        weight=sorted(list_weight)
-        portion_weight= int(weight[-1])
+    #turns the motor
+    for i in range(0,turn):
+        mot.turn_motor()
 
-        #insert how much food is eaten in to to food_eaten tabe
-        if portion_weight > 1000 :
-            portion_Data= float(portion_weight/1000)
-            db.setDataToFood_eaten(portion_Data,2,0)
-        else:
-            db.setDataToFood_eaten(portion_weight,1,0)
+    #gets the weight and put the resluts in a list
+    list_weight=[]
+    for i in range(0,10):
+        val = max(0, int(hx.get_weight(5)))
+        print(val)
+        hx.power_down()
+        hx.power_up()
+        list_weight.append(int(val))
+        time.sleep(0.5)
 
-        #calculates how much is resting from the max portionsize
-        rest_portionsize = rest_portionsize - portion_weight
-        print(rest_portionsize)
+    #the list gets sorted so hightest value would be last
+    weight=sorted(list_weight)
+    portion_weight= int(weight[-1])
 
-        if rest_portionsize < 0 :
-            rest_portionsize = 0
-        else:
-            rest_portionsize = rest_portionsize
+    #insert how much food is eaten in to to food_eaten tabe
+    if portion_weight > 1000 :
+        portion_Data= float(portion_weight/1000)
+        db.setDataToFood_eaten(portion_Data,2,0)
+    else:
+        db.setDataToFood_eaten(portion_weight,1,0)
 
-        db.setDataToResting_portionsize(rest_portionsize,1)
 
-        ##################################################
+    ##################################################
 
-        #starts up the reservoir scale
-        hx_res.set_reading_format("LSB", "MSB")
-        hx_res.set_reference_unit(393.35)
-        hx_res.reset()
+    #starts up the reservoir scale
+    hx_res.set_reading_format("LSB", "MSB")
+    hx_res.set_reference_unit(393.35)
+    hx_res.reset()
 
-        # gets the weight and put the resluts in a list
-        list_weight = []
-        for i in range(0, 10):
-            val = max(0, int(hx_res.get_weight(5)))
-            print(val)
-            hx_res.power_down()
-            hx_res.power_up()
-            list_weight.append(int(val))
-            time.sleep(0.5)
+    # gets the weight and put the resluts in a list
+    list_weight = []
+    for i in range(0, 10):
+        val = max(0, int(hx_res.get_weight(5)))
+        print(val)
+        hx_res.power_down()
+        hx_res.power_up()
+        list_weight.append(int(val))
+        time.sleep(0.5)
 
-        #calculate how much food is left
-        weight = (list_weight)
-        portion_weight = int(weight[-1])
-        print(portion_weight)
-        portion_weight=portion_weight-22954 #can only be done when de reference unit is positive
-        print('portie:' + str(portion_weight))
+    #calculate how much food is left
+    weight = (list_weight)
+    portion_weight = int(weight[-1])
+    print(portion_weight)
+    portion_weight=portion_weight-22954 #can only be done when de reference unit is positive
+    print('portie:' + str(portion_weight))
 
-        #inserts how much food is leftt in de Food reservoir tale
-        if portion_weight > 1000:
-            portion_Data = float(portion_weight / 1000)
-            print('data' + str(portion_Data))
-            db.setDataToFood_reservoir(portion_Data, 2)
-        elif portion_weight < 0:
-            portion_weight= 0
-            db.setDataToFood_reservoir(portion_weight, 1)
-        else: db.setDataToFood_reservoir(portion_weight, 1)
+    #inserts how much food is leftt in de Food reservoir tale
+    if portion_weight > 1000:
+        portion_Data = float(portion_weight / 1000)
+        print('data' + str(portion_Data))
+        db.setDataToFood_reservoir(portion_Data, 2)
+    elif portion_weight < 0:
+        portion_weight= 0
+        db.setDataToFood_reservoir(portion_weight, 1)
+    else: db.setDataToFood_reservoir(portion_weight, 1)
 
 
 
@@ -198,7 +184,11 @@ def Settings():
     portionsize = db.getPortionsize(weight)
     portionsize = portionsize[0]
 
-    return render_template('settings.html',recommended = portionsize,dog_info=dog_info,max_portionsize=cur_max_portionsize, unit_max=unit_max)
+    rest = db.getResting_portionsize()
+    rest=rest[-1]
+    weight = rest[0]
+
+    return render_template('settings.html',recommended = portionsize,dog_info=dog_info,max_portionsize=cur_max_portionsize, unit_max=unit_max, rest=weight)
 
 
 
@@ -237,7 +227,11 @@ def addData():
     portionsize = db.getPortionsize(weight)
     portionsize = portionsize[0]
 
-    return render_template('settings.html',recommended=portionsize,dog_info=dog_info,max_portionsize=cur_max_portionsize,unit_max=unit_max)
+    rest = db.getResting_portionsize()
+    rest = rest[-1]
+    weight = rest[0]
+
+    return render_template('settings.html',recommended=portionsize,dog_info=dog_info,max_portionsize=cur_max_portionsize,unit_max=unit_max,rest = weight)
 
 
 @app.route('/time')
@@ -310,7 +304,11 @@ def addPortion():
     portionsize = db.getPortionsize(weight)
     portionsize = portionsize[0]
 
-    return render_template('settings.html',recommended=portionsize,dog_info=dog_info,max_portionsize=cur_max_portionsize, unit=unit_max)
+    rest = db.getResting_portionsize()
+    rest = rest[-1]
+    weight = rest[0]
+
+    return render_template('settings.html',recommended=portionsize,dog_info=dog_info,max_portionsize=cur_max_portionsize, unit=unit_max,rest=weight)
 
 @app.route('/history')
 def history():
@@ -336,7 +334,7 @@ def history():
         data_list=[['no food has bean eaten',0]]
     print(data_list)
 
-    return render_template('history.html',data_list=data_list,)
+    return render_template('history.html',data_list=data_list,date = date)
 
 
 @app.route('/changeDate',methods=['GET','POST'])

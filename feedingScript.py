@@ -28,7 +28,7 @@ while True:
         max_portion = max_portion[-1]
         portion = max_portion[0]
         unit = max_portion[1]
-        if portion > 999:
+        if unit == "kg":
             portion=portion * 1000
         db.setDataToResting_portionsize(portion,1)
         reset = True
