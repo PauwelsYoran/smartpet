@@ -1,0 +1,11 @@
+INSERT INTO smartpet.max_portionsize (ID, weight, unit_ID, timestamp) VALUES (113, 50.00, 1, '2017-06-09 16:05:21');
+INSERT INTO smartpet.max_portionsize (ID, weight, unit_ID, timestamp) VALUES (114, 150.00, 2, '2017-06-09 16:06:23');
+INSERT INTO smartpet.max_portionsize (ID, weight, unit_ID, timestamp) VALUES (115, 200.00, 1, '2017-06-09 16:06:31');
+INSERT INTO smartpet.max_portionsize (ID, weight, unit_ID, timestamp) VALUES (116, 150.00, 1, '2017-06-09 16:09:10');
+INSERT INTO smartpet.max_portionsize (ID, weight, unit_ID, timestamp) VALUES (117, 2.50, 2, '2017-06-09 16:09:16');
+INSERT INTO smartpet.max_portionsize (ID, weight, unit_ID, timestamp) VALUES (118, 300.00, 1, '2017-06-09 16:09:20');
+INSERT INTO smartpet.max_portionsize (ID, weight, unit_ID, timestamp) VALUES (119, 500.00, 1, '2017-06-09 16:41:11');
+INSERT INTO smartpet.max_portionsize (ID, weight, unit_ID, timestamp) VALUES (122, 1.00, 2, '2017-06-15 12:57:17');
+INSERT INTO smartpet.max_portionsize (ID, weight, unit_ID, timestamp) VALUES (123, 1.20, 2, '2017-06-16 13:56:25');
+INSERT INTO smartpet.max_portionsize (ID, weight, unit_ID, timestamp) VALUES (124, 1.00, 2, '2017-06-16 14:07:20');
+INSERT INTO smartpet.max_portionsize (ID, weight, unit_ID, timestamp) VALUES (125, 1.00, 2, '2017-06-16 19:50:31');
